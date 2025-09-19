@@ -1,0 +1,7 @@
+Flask
+opencv-python
+ultralytics
+numpy
+pymongo[srv]
+python-dotenv
+cloudinary
