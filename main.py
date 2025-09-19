@@ -8,6 +8,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import cloudinary
 import cloudinary.uploader
+from datetime import datetime
 
 # ============================
 # STEP 1: INITIALIZE APP & SERVICES
@@ -145,7 +146,7 @@ def analyze_image():
         db_document = {
             'annotatedImageUrl': annotated_image_url,
             'detections': detections_data,
-            'createdAt': np.datetime64('now', 'ms').item() # Using numpy for BSON-compatible datetime
+            'createdAt': datetime.utcnow() # Using standard datetime
         }
 
         # Insert into database
@@ -164,6 +165,9 @@ def analyze_image():
 
 
 if __name__ == '__main__':
-    # Use 0.0.0.0 to be accessible across the network
-    # The port can be changed if needed
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # --- FIX FOR DEPLOYMENT ---
+    # 1. Get the port from the environment variable (e.g., set by Render).
+    # 2. Default to 5000 if the PORT variable is not set (for local development).
+    # 3. Set debug=False for production.
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
