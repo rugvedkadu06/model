@@ -29,7 +29,7 @@ except Exception as e:
 # --- Connect to MongoDB ---
 try:
     client = MongoClient(os.getenv('MONGO_URI'))
-    db = client.janvaani_db # Use or create a database named 'janvaani_db'
+    db = client.test # Use or create a database named 'test'
     detections_collection = db.detections # Use or create a collection named 'detections'
     # Test connection
     client.server_info()
@@ -171,3 +171,4 @@ if __name__ == '__main__':
     # 3. Set debug=False for production.
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
